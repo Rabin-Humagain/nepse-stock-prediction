@@ -3,5 +3,8 @@ __pycache__/
 *.pyc
 data/history/
 data/cleaned/
-data/daily/
 data/charts/
+data/all_symbols.csv
+data/scrape_log.txt
+data/nepse_*.csv
+.idea/
