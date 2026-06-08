@@ -43,6 +43,7 @@ jobs:
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
+          git pull origin main
           git add data/predictions/
           git add data/daily/
           git add data/usable/
@@ -53,12 +54,4 @@ jobs:
           fi
           
           git commit -m "Auto update — $(date +'%Y-%m-%d')"
-          
-          # Retry logic
-          for i in {1..5}; do
-            git fetch origin main && git rebase origin/main && git push origin main && exit 0
-            echo "Attempt $i failed, retrying..."
-            sleep 2
-          done
-          
-          exit 1
+          git push origin main
