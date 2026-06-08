@@ -2,10 +2,7 @@ name: NEPSE Daily Pipeline
 
 on:
   schedule:
-    # runs at 11:10 AM UTC = 4:55 PM Nepal time, Monday to Friday
     - cron: '10 11 * * 1-5'
-
-  # allows manual trigger from GitHub website
   workflow_dispatch:
 
 jobs:
@@ -14,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
