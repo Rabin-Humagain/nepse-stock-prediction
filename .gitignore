@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+data/history/
+data/cleaned/
+data/daily/
+data/charts/
