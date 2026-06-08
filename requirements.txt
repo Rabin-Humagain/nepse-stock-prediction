@@ -6,3 +6,4 @@ webdriver-manager
 scikit-learn
 matplotlib
 urllib3
+.idea/
