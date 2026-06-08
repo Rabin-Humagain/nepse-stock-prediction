@@ -1,0 +1,48 @@
+name: NEPSE Daily Pipeline
+
+on:
+  schedule:
+    # runs at 11:10 AM UTC = 4:55 PM Nepal time, Monday to Friday
+    - cron: '10 11 * * 1-5'
+
+  # allows manual trigger from GitHub website
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 pandas scikit-learn urllib3
+
+      - name: Run daily scraper
+        run: python daily_scraper.py
+
+      - name: Clean data
+        run: python clean.py
+
+      - name: Filter usable companies
+        run: python filter_usable.py
+
+      - name: Run predictions
+        run: python predict.py
+
+      - name: Commit and push results
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add data/predictions/
+          git add data/daily/
+          git add data/usable/
+          git diff --staged --quiet || git commit -m "Auto update — $(date +'%Y-%m-%d')"
+          git push
